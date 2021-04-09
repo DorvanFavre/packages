@@ -234,10 +234,10 @@ packages:
   tools:
     dependency: "direct main"
     description:
-      path: "."
+      path: tools
       ref: HEAD
-      resolved-ref: c7137e4e9935d536b1e271ca699409ec475ffe1d
-      url: "https://github.com/DorvanFavre/tools.git"
+      resolved-ref: ced2d1886caaa1f2a072c908c71057f510fc3172
+      url: "https://github.com/DorvanFavre/packages.git"
     source: git
     version: "0.0.1"
   typed_data:

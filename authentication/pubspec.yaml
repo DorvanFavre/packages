@@ -19,7 +19,8 @@ dependencies:
 
   tools:
     git:
-      url: https://github.com/DorvanFavre/tools.git
+      url: https://github.com/DorvanFavre/packages.git
+      path: tools
 
 dev_dependencies:
   flutter_test:
