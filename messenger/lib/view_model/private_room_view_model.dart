@@ -4,10 +4,23 @@ part of '../messenger.dart';
 ///
 ///
 abstract class PrivateRoomViewModel {
+  factory PrivateRoomViewModel(
+      {Room room, RoomOption roomOption, AuthViewModel authViewModel}) {
+    return _PrivateRoomViewModelImpl(
+        room: room, roomOption: roomOption, authViewModel: authViewModel);
+  }
 
-  factory PrivateRoomViewModel({Room room, RoomOption roomOption}) {
-    throw UnimplementedError(
-        'PrivateRoomViewModel has no implementation yet'); // TODO
+  static Future<Result<Room>> createPrivateRoom(AuthViewModel authViewModel, String withUserId){
+    return authViewModel.authStateStream.first.then((authState) {
+      if(authState is UserLoggedIn){
+        final user = authState.user;
+
+        return _MessengerService().createPrivateRoom(); // TODO 
+      }
+      else{
+        return Future.value(Failure(message: 'Cannot create room if no user logged in'));
+      }
+    })
   }
 
   /// Message notifier
@@ -20,17 +33,22 @@ abstract class PrivateRoomViewModel {
   /// Get old message
   ///
   /// Call when reaching top of the ListView to get more messages
-  Result fetchMoreMessages();
+  Future<Result> fetchMoreMessages();
 
   /// Send message
   ///
   /// Send the text of the [messageController]
-  Result sendMessage();
+  Future<Result> sendMessage();
 
   /// Message controller
   ///
   /// The text you are about to send
   TextEditingController messageController;
+
+  /// Stream of messages to help debugging
+  Stream<String> infoStream;
+
+  AuthViewModel authViewModel;
 
   void dispose();
 }

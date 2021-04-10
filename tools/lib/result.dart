@@ -10,7 +10,7 @@ class Success<T> extends Result<T> {
   T data;
 }
 
-class Failure extends Result {
+class Failure<T> extends Result<T> {
   final String message;
 
   Failure({this.message = 'no message'});
