@@ -3,9 +3,9 @@ part of 'tools.dart';
 /// Result
 /// 
 /// Result is an abstract class, can be either Success() or Failure()
-abstract class Result {}
+abstract class Result<S> {}
 
-class Success<T> extends Result {
+class Success<T> extends Result<T> {
   Success({this.data});
   T data;
 }
