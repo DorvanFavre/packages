@@ -17,9 +17,15 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
 
     _incomingMessageSubscription =
         MessengerService()._incomingMessageStream(room).listen((message) {
-      messagesNotifier.value = messagesNotifier.value..insert(0, message);
-      _infoBehavior
-          .add('PrivateRoomViewModel : message recieved : ${message.content}');
+      if (message != null) {
+        messagesNotifier.value = messagesNotifier.value..insert(0, message);
+        _infoBehavior.add(
+            'PrivateRoomViewModel : message recieved : ${message.content}');
+      }
+      else{
+        _infoBehavior.add(
+            'PrivateRoomViewModel : null recieved');
+      }
     });
   }
 
