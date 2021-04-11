@@ -7,5 +7,5 @@ class RoomOption {
   /// Number of message loaded when call getOldMessages()
   final int loadOldMessageAmount;
 
-  RoomOption({this.firstLoadAmount = 10, this.loadOldMessageAmount = 5});
+  const RoomOption({this.firstLoadAmount = 10, this.loadOldMessageAmount = 5});
 }

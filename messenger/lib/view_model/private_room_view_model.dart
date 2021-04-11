@@ -4,8 +4,11 @@ part of '../messenger.dart';
 ///
 ///
 abstract class PrivateRoomViewModel {
-  factory PrivateRoomViewModel(
-      {Room room, RoomOption roomOption, AuthViewModel authViewModel}) {
+  factory PrivateRoomViewModel({
+    @required Room room,
+    @required AuthViewModel authViewModel,
+    RoomOption roomOption,
+  }) {
     return _PrivateRoomViewModelImpl(
         room: room, roomOption: roomOption, authViewModel: authViewModel);
   }

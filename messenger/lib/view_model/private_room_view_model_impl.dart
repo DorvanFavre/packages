@@ -1,10 +1,11 @@
 part of '../messenger.dart';
 
 class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
-  _PrivateRoomViewModelImpl(
-      {@required this.room,
-      @required this.roomOption,
-      @required this.authViewModel}) {
+  _PrivateRoomViewModelImpl({
+    @required this.room,
+    @required this.authViewModel,
+    this.roomOption = const RoomOption(),
+  }) {
     inputMessageController = TextEditingController();
     messagesNotifier = ValueNotifier([]);
     _infoBehavior = BehaviorSubject();
