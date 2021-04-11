@@ -69,7 +69,7 @@ class _MessengerServiceFirebase implements MessengerService {
   Stream<Message> _incomingMessageStream(Room room) {
     return room.docRef
         .collection(kMessagesCollection)
-        .limit(0)
+        .limit(1)
         .snapshots()
         .where((snap) => snap.docChanges.last.type == DocumentChangeType.added)
         .map((snap) {
