@@ -1,19 +1,19 @@
 part of '../messenger.dart';
 
-abstract class _MessengerService {
-  factory _MessengerService() {
+abstract class MessengerService {
+  factory MessengerService() {
     return _MessengerServiceFirebase();
   }
 
-  Future<Result<Room>> createPrivateRoom();
+  Future<Result<Room>> createPrivateRoom(String firstUserId, String secondUserId);
 
   /// Fetch [limit] messages in database, [fromLastDoc] if non-null
-  Future<Result<List<Message>>> fetchMessages(Room room, int limit,
+  Future<Result<List<Message>>> _fetchMessages(Room room, int limit,
       {QueryDocumentSnapshot fromLastDoc});
 
   /// Stream of the last message
-  Stream<Message> incomingMessageStream(Room room);
+  Stream<Message> _incomingMessageStream(Room room);
 
   /// Save message in the database
-  Future<Result> saveMessage(Room room, Message message);
+  Future<Result> _saveMessage(Room room, Message message);
 }

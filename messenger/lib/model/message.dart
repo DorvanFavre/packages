@@ -25,7 +25,7 @@ class Message {
   }
 
   Message(
-      {@required this.docRef,
+      {this.docRef,
       @required this.senderId,
       @required this.content,
       @required this.sentTime,
@@ -49,5 +49,3 @@ class Message {
     };
   }
 }
-
-

@@ -10,19 +10,6 @@ abstract class PrivateRoomViewModel {
         room: room, roomOption: roomOption, authViewModel: authViewModel);
   }
 
-  static Future<Result<Room>> createPrivateRoom(AuthViewModel authViewModel, String withUserId){
-    return authViewModel.authStateStream.first.then((authState) {
-      if(authState is UserLoggedIn){
-        final user = authState.user;
-
-        return _MessengerService().createPrivateRoom(); // TODO 
-      }
-      else{
-        return Future.value(Failure(message: 'Cannot create room if no user logged in'));
-      }
-    })
-  }
-
   /// Message notifier
   ///
   /// List of messages - get notified when list changes

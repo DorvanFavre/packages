@@ -28,8 +28,8 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
     if (!_isLoading && !_noMoreMessageToFetch) {
       _isLoading = true;
       if (_lastDoc == null) {
-        return _MessengerService()
-            .fetchMessages(room, roomOption.firstLoadAmount)
+        return MessengerService()
+            ._fetchMessages(room, roomOption.firstLoadAmount)
             .then((result) {
           if (result is Success<List<Message>>) {
             final newMessages = result.data;
@@ -48,8 +48,8 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
           return result;
         });
       } else {
-        return _MessengerService()
-            .fetchMessages(room, roomOption.loadOldMessageAmount,
+        return MessengerService()
+            ._fetchMessages(room, roomOption.loadOldMessageAmount,
                 fromLastDoc: _lastDoc)
             .then((result) {
           if (result is Success<List<Message>>) {
@@ -78,24 +78,35 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
 
   @override
   Future<Result> sendMessage() {
-    authViewModel.authStateStream.first.then((authState) {
+    _infoBehavior.add('PrivateRoomViewModel : Send message');
+    return authViewModel.authStateStream.first.then((authState) {
       if (authState is UserLoggedIn) {
         final user = authState.user;
 
-        final sendtTime = Timestamp.now();
-        final documentId =
-            (10000000000000 - now.millisecondsSinceEpoch).toString();
-
-        final documentReference = widget.documentReference
-            .collection(kMessagesCollection)
-            .doc(documentId);
+        final now = Timestamp.now();
 
         Message message = Message(
           content: messageController.text,
           contentType: 'text', // Todo change
           senderId: user.uid,
-          sentTime: sendtTime,
+          sentTime: now,
         );
+
+        return MessengerService()._saveMessage(room, message)
+          ..then((result) {
+            if (result is Success) {
+              _infoBehavior
+                  .add('PrivateRoomViewModel :   Success : Message saved to database');
+            } else if (result is Failure) {
+              _infoBehavior
+                  .add('PrivateRoomViewModel :   Failure : ${result.message}');
+            }
+          });
+      } else {
+        _infoBehavior.add(
+            'PrivateRoomViewModel :   Cannot send message if no user logged in');
+        return Future.value(
+            Failure(message: 'Cannot send message if no user logged in'));
       }
     });
   }
