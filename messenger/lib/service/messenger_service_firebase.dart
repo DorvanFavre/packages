@@ -68,7 +68,7 @@ class _MessengerServiceFirebase implements MessengerService {
   @override
   Stream<Message> _incomingMessageStream(Room room) {
     print('messenger service firebase : room ref : ' + room.docRef.toString());
-    return room.docRef
+    final x = room.docRef
         .collection(kMessagesCollection)
         .limit(1)
         .snapshots()
@@ -79,6 +79,9 @@ class _MessengerServiceFirebase implements MessengerService {
       } else
         return null;
     });
+
+    print('messenger service firebase :  ' + x.toString());
+    return x;
   }
 
   @override
