@@ -10,11 +10,11 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
     _infoBehavior = BehaviorSubject();
     infoStream = _infoBehavior.stream;
 
-    MessengerService()._incomingMessageStream(room).listen((message) {
+    /*MessengerService()._incomingMessageStream(room).listen((message) {
       messagesNotifier.value = messagesNotifier.value..add(message);
       _infoBehavior
           .add('PrivateRoomViewModel : message recieved : ${message.content}');
-    });
+    });*/
 
     _infoBehavior.add('PrivateRoomViewModel : instancied');
   }
