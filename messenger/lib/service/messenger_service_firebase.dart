@@ -35,10 +35,9 @@ class _MessengerServiceFirebase implements MessengerService {
 
     return docRef.get().then((snap) {
       if (snap.exists) {
-        return Future.value(Success(
-                data: Room.fromEntity(
-                    snap.data()..addAll({Room.docRefField: snap.reference})))
-            as Result<Room>);
+        final data = snap.data()..addAll({Room.docRefField: snap.reference});
+        return Future.value(
+            Success(data: Room.fromEntity(data)) as Result<Room>);
       } else {
         return createPrivateRoom(firstUserId, secondUserId);
       }
@@ -58,10 +57,11 @@ class _MessengerServiceFirebase implements MessengerService {
         .limit(limit)
         .get()
         .then((snap) => Success(
-            data: snap.docs
-                .map((doc) => Message.fromEntity(
-                    doc.data()..addAll({Message.docRefField: doc.reference})))
-                .toList()) as Result<List<Message>>)
+                data: snap.docs.map((doc) {
+              final data = doc.data()
+                ..addAll({Message.docRefField: doc.reference});
+              return Message.fromEntity(data);
+            }).toList()) as Result<List<Message>>)
         .catchError((e) => Failure<List<Message>>(message: e.toString()));
   }
 
@@ -74,8 +74,9 @@ class _MessengerServiceFirebase implements MessengerService {
         .snapshots()
         .map((snap) {
       if (snap.docChanges.first.type == DocumentChangeType.added) {
-        return Message.fromEntity(snap.docs.first.data()
-          ..addAll({Message.docRefField: snap.docs.first.reference}));
+        final data = snap.docs.first.data()
+          ..addAll({Message.docRefField: snap.docs.first.reference});
+        return Message.fromEntity(data);
       } else
         return null;
     });

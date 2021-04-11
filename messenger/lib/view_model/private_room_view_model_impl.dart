@@ -21,7 +21,7 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
         messagesNotifier.value.insert(0, message);
         messagesNotifier.notifyListeners();
         _infoBehavior.add(
-            'PrivateRoomViewModel : message recieved : ${message.content}');
+            'PrivateRoomViewModel : message recieved : ${message?.content ?? '-'}');
       } else {
         _infoBehavior.add('PrivateRoomViewModel : null recieved');
       }
