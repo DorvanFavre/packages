@@ -23,6 +23,7 @@ class PrivateRoomView extends StatelessWidget {
                   },
                   child: messages.length > 0
                       ? ListView.builder(
+                          reverse: true,
                           itemCount: messages.length,
                           itemBuilder: (context, index) {
                             final message = messages[index];
@@ -30,8 +31,10 @@ class PrivateRoomView extends StatelessWidget {
                           })
                       : ListView(
                           children: [
-                            Center(
-                              child: Text('No messages'),
+                            Expanded(
+                              child: Center(
+                                child: Text('No messages'),
+                              ),
                             ),
                           ],
                         ))),

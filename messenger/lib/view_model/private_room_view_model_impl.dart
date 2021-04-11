@@ -10,6 +10,12 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
     _infoBehavior = BehaviorSubject();
     infoStream = _infoBehavior.stream;
 
+    MessengerService()._incomingMessageStream(room).listen((message) {
+      messagesNotifier.value = messagesNotifier.value..add(message);
+      _infoBehavior
+          .add('PrivateRoomViewModel : message recieved : ${message.content}');
+    });
+
     _infoBehavior.add('PrivateRoomViewModel : instancied');
   }
 
@@ -95,8 +101,9 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
         return MessengerService()._saveMessage(room, message)
           ..then((result) {
             if (result is Success) {
-              _infoBehavior
-                  .add('PrivateRoomViewModel :   Success : Message saved to database');
+              messageController.clear();
+              _infoBehavior.add(
+                  'PrivateRoomViewModel :   Success : Message saved to database');
             } else if (result is Failure) {
               _infoBehavior
                   .add('PrivateRoomViewModel :   Failure : ${result.message}');

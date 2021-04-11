@@ -67,9 +67,17 @@ class _MessengerServiceFirebase implements MessengerService {
 
   @override
   Stream<Message> _incomingMessageStream(Room room) {
-    return room.docRef.collection(kMessagesCollection).limit(1).snapshots().map(
-        (snap) => Message.fromEntity(snap.docs.first.data()
-          ..addAll({Message.docRefField: snap.docs.first.reference})));
+    return room.docRef
+        .collection(kMessagesCollection)
+        .limit(1)
+        .snapshots()
+        .map((snap) {
+      if (snap.docChanges.first.type == DocumentChangeType.added) {
+        return Message.fromEntity(snap.docs.first.data()
+          ..addAll({Message.docRefField: snap.docs.first.reference}));
+      }
+      else return null;
+    });
   }
 
   @override
