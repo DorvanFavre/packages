@@ -27,6 +27,24 @@ class _MessengerServiceFirebase implements MessengerService {
   }
 
   @override
+  Future<Result<Room>> openPrivateRoom(
+      String firstUserId, String secondUserId) {
+    final roomId = Room.getChatRoomId(firstUserId, secondUserId);
+    final docRef =
+        FirebaseFirestore.instance.collection(kRoomsCollection).doc(roomId);
+
+    return docRef.get().then((snap) {
+      if (snap.exists) {
+        return Success(
+            data: Room.fromEntity(
+                snap.data()..addAll({Room.docRefField: snap.reference})));
+      } else {
+        return createPrivateRoom(firstUserId, secondUserId);
+      }
+    }).catchError((e) => Failure<Room>(message: e.toString()));
+  }
+
+  @override
   Future<Result<List<Message>>> _fetchMessages(Room room, int limit,
       {QueryDocumentSnapshot fromLastDoc}) {
     final query = fromLastDoc != null

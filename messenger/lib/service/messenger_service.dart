@@ -6,6 +6,7 @@ abstract class MessengerService {
   }
 
   Future<Result<Room>> createPrivateRoom(String firstUserId, String secondUserId);
+  Future<Result<Room>> openPrivateRoom(String firstUserId, String secondUserId);
 
   /// Fetch [limit] messages in database, [fromLastDoc] if non-null
   Future<Result<List<Message>>> _fetchMessages(Room room, int limit,
