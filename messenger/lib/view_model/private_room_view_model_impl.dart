@@ -13,7 +13,7 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
 
     _infoBehavior.add('PrivateRoomViewModel : instancied');
 
-    fetchMoreMessages();
+    //fetchMoreMessages();
 
     _incomingMessageSubscription =
         MessengerService()._incomingMessageStream(room).listen((message) {
@@ -53,10 +53,13 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
               _infoBehavior
                   .add('PrivateRoomViewModel :   No more message to fetch');
             }
+            _isLoading = false;
+            return Success();
+          } else if (result is Failure<List<Message>>) {
+            _isLoading = false;
+            return Failure(message: result.message);
           }
-          _isLoading = false;
-          return result;
-        });
+        }).catchError((e) => Failure(message: e.toString()));
       } else {
         return MessengerService()
             ._fetchMessages(room, roomOption.loadOldMessageAmount,
