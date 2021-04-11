@@ -76,12 +76,12 @@ class _MessengerServiceFirebase implements MessengerService {
       print(
           'messenger service firebase : docChanges length : ${snap.docChanges.length}');
       print(
-          'messenger service firebase : docChanges first : ${snap.docChanges.first.doc.id}');
+          'messenger service firebase : docChanges last : ${snap.docChanges.last.doc.id}');
       print(
-          'messenger service firebase : docChanges first type : ${snap.docChanges.first.type}');
-      if (snap.docChanges.first.type == DocumentChangeType.added) {
-        final data = snap.docs.first.data()
-          ..addAll({Message.docRefField: snap.docs.first.reference});
+          'messenger service firebase : docChanges last type : ${snap.docChanges.last.type}');
+      if (snap.docChanges.last.type == DocumentChangeType.added) {
+        final data = snap.docs.last.data()
+          ..addAll({Message.docRefField: snap.docs.last.reference});
         return Message.fromEntity(data);
       } else
         return null;
