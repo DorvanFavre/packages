@@ -61,8 +61,8 @@ class _MessengerServiceFirebase implements MessengerService {
             data: snap.docs
                 .map((doc) => Message.fromEntity(
                     doc.data()..addAll({Message.docRefField: doc.reference})))
-                .toList()) as Result)
-        .catchError((e) => Failure(message: e.toString()));
+                .toList()) as Result<List<Message>>)
+        .catchError((e) => Failure<List<Message>>(message: e.toString()));
   }
 
   @override
