@@ -29,14 +29,8 @@ class PrivateRoomView extends StatelessWidget {
                             final message = messages[index];
                             return MessageView(message: message);
                           })
-                      : ListView(
-                          children: [
-                            Expanded(
-                              child: Center(
-                                child: Text('No messages'),
-                              ),
-                            ),
-                          ],
+                      : Center(
+                          child: Text('No messages'),
                         ))),
         ),
         Padding(
