@@ -67,6 +67,7 @@ class _MessengerServiceFirebase implements MessengerService {
 
   @override
   Stream<Message> _incomingMessageStream(Room room) {
+    print('messenger service firebase : room ref : ' + room.docRef.toString());
     return room.docRef
         .collection(kMessagesCollection)
         .limit(1)
@@ -75,8 +76,8 @@ class _MessengerServiceFirebase implements MessengerService {
       if (snap.docChanges.first.type == DocumentChangeType.added) {
         return Message.fromEntity(snap.docs.first.data()
           ..addAll({Message.docRefField: snap.docs.first.reference}));
-      }
-      else return null;
+      } else
+        return null;
     });
   }
 
