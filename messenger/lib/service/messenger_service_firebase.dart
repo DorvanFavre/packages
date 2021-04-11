@@ -67,12 +67,18 @@ class _MessengerServiceFirebase implements MessengerService {
 
   @override
   Stream<Message> _incomingMessageStream(Room room) {
-    //print('messenger service firebase : room ref : ' + room.docRef.toString());
+    print('messenger service firebase : room ref : ' + room.docRef.toString());
     final x = room.docRef
         .collection(kMessagesCollection)
         .limit(1)
         .snapshots()
         .map((snap) {
+      print(
+          'messenger service firebase : docChanges length : ${snap.docChanges.length}');
+      print(
+          'messenger service firebase : docChanges first : ${snap.docChanges.first.doc.id}');
+      print(
+          'messenger service firebase : docChanges first type : ${snap.docChanges.first.type}');
       if (snap.docChanges.first.type == DocumentChangeType.added) {
         final data = snap.docs.first.data()
           ..addAll({Message.docRefField: snap.docs.first.reference});
