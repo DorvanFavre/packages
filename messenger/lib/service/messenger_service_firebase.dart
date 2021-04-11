@@ -35,9 +35,10 @@ class _MessengerServiceFirebase implements MessengerService {
 
     return docRef.get().then((snap) {
       if (snap.exists) {
-        return Success(
-            data: Room.fromEntity(
-                snap.data()..addAll({Room.docRefField: snap.reference})));
+        return Future.value(Success(
+                data: Room.fromEntity(
+                    snap.data()..addAll({Room.docRefField: snap.reference})))
+            as Result<Room>);
       } else {
         return createPrivateRoom(firstUserId, secondUserId);
       }
