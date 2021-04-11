@@ -17,7 +17,7 @@ class InputMessage extends StatelessWidget {
               onEditingComplete: () {
                 viewModel.sendMessage();
               },
-              controller: viewModel.messageController,
+              controller: viewModel.inputMessageController,
               decoration: InputDecoration(
                   border: OutlineInputBorder(), fillColor: Colors.white30),
             ),

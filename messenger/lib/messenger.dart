@@ -4,6 +4,8 @@
 /// Implement a messenger API in your project
 library messenger;
 
+import 'dart:async';
+
 import 'package:authentication/authentication.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

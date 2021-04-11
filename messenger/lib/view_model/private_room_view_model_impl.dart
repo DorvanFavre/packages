@@ -5,25 +5,27 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
       {@required this.room,
       @required this.roomOption,
       @required this.authViewModel}) {
-    messageController = TextEditingController();
+    _infoBehavior.add('PrivateRoomViewModel : instancied');
+
+    inputMessageController = TextEditingController();
     messagesNotifier = ValueNotifier([]);
     _infoBehavior = BehaviorSubject();
     infoStream = _infoBehavior.stream;
 
-    MessengerService()._incomingMessageStream(room).listen((message) {
-      messagesNotifier.value = messagesNotifier.value..add(message);
+    fetchMoreMessages();
+
+    _incomingMessageSubscription = MessengerService()._incomingMessageStream(room).listen((message) {
+      messagesNotifier.value = messagesNotifier.value..insert(0, message);
       _infoBehavior
           .add('PrivateRoomViewModel : message recieved : ${message.content}');
     });
-
-    _infoBehavior.add('PrivateRoomViewModel : instancied');
   }
 
   final Room room;
   final RoomOption roomOption;
 
   @override
-  TextEditingController messageController;
+  TextEditingController inputMessageController;
 
   @override
   ValueNotifier<List<Message>> messagesNotifier;
@@ -92,7 +94,7 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
         final now = Timestamp.now();
 
         Message message = Message(
-          content: messageController.text,
+          content: inputMessageController.text,
           contentType: 'text', // Todo change
           senderId: user.uid,
           sentTime: now,
@@ -101,7 +103,7 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
         return MessengerService()._saveMessage(room, message)
           ..then((result) {
             if (result is Success) {
-              messageController.clear();
+              inputMessageController.clear();
               _infoBehavior.add(
                   'PrivateRoomViewModel :   Success : Message saved to database');
             } else if (result is Failure) {
@@ -123,11 +125,13 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
   bool _isLoading = false;
   bool _noMoreMessageToFetch = false;
   QueryDocumentSnapshot _lastDoc;
+  StreamSubscription _incomingMessageSubscription;
   BehaviorSubject<String> _infoBehavior;
 
   @override
   void dispose() {
-    messageController.dispose();
+    _incomingMessageSubscription.cancel();
+    inputMessageController.dispose();
     _infoBehavior.close();
   }
 

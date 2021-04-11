@@ -24,13 +24,13 @@ abstract class PrivateRoomViewModel {
 
   /// Send message
   ///
-  /// Send the text of the [messageController]
+  /// Send the text of the [inputMessageController]
   Future<Result> sendMessage();
 
   /// Message controller
   ///
   /// The text you are about to send
-  TextEditingController messageController;
+  TextEditingController inputMessageController;
 
   /// Stream of messages to help debugging
   Stream<String> infoStream;

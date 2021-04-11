@@ -86,9 +86,13 @@ class _MessengerServiceFirebase implements MessengerService {
 
   @override
   Future<Result> _saveMessage(Room room, Message message) {
+    final documentId =
+        (10000000000000 - DateTime.now().millisecondsSinceEpoch).toString();
+
     return room.docRef
         .collection(kMessagesCollection)
-        .add(message.toEntity())
+        .doc(documentId)
+        .set(message.toEntity())
         .then((docRef) => Success(data: 'Message saved to database') as Result)
         .catchError((e) => Failure(message: e.toString()));
   }
