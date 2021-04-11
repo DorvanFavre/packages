@@ -5,16 +5,17 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
       {@required this.room,
       @required this.roomOption,
       @required this.authViewModel}) {
-    _infoBehavior.add('PrivateRoomViewModel : instancied');
-
     inputMessageController = TextEditingController();
     messagesNotifier = ValueNotifier([]);
     _infoBehavior = BehaviorSubject();
     infoStream = _infoBehavior.stream;
 
+    _infoBehavior.add('PrivateRoomViewModel : instancied');
+
     fetchMoreMessages();
 
-    _incomingMessageSubscription = MessengerService()._incomingMessageStream(room).listen((message) {
+    _incomingMessageSubscription =
+        MessengerService()._incomingMessageStream(room).listen((message) {
       messagesNotifier.value = messagesNotifier.value..insert(0, message);
       _infoBehavior
           .add('PrivateRoomViewModel : message recieved : ${message.content}');
