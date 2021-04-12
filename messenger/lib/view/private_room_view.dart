@@ -1,7 +1,7 @@
 part of '../messenger.dart';
 
 class PrivateRoomView extends StatelessWidget {
-  final PrivateRoomViewModel viewModel;
+  final RoomViewModel viewModel;
 
   PrivateRoomView({@required this.viewModel});
 

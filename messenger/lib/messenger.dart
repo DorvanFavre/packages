@@ -5,12 +5,11 @@
 ///  * Private conversations
 /// 
 /// 
-/// MessengerService()
+/// RoomViewModel
+///  * openPrivateRoom(String, String)
 /// 
-///  *
 /// 
-/// PrivateViewModel(AuthViewModel, Room, RoomOption)
-/// 
+/// RoomViewModel(AuthViewModel, Room, RoomOption)
 ///  * messageNotifier
 ///  * inputMessageController
 ///  * fetchMoreMessages()
@@ -41,8 +40,8 @@ part 'view/private_room_view.dart';
 part 'view/message_view.dart';
 part 'view/input_message_view.dart';
 
-part 'view_model/private_room_view_model.dart';
-part 'view_model/private_room_view_model_impl.dart';
+part 'view_model/room_view_model.dart';
+part 'view_model/room_view_model_impl.dart';
 
 part 'service/messenger_service.dart';
 part 'service/messenger_service_firebase.dart';

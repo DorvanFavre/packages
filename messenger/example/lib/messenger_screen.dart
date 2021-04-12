@@ -16,7 +16,7 @@ class MessengerScreen extends StatefulWidget {
 }
 
 class _MessengerScreenState extends State<MessengerScreen> {
-  mes.PrivateRoomViewModel privateRoomViewModel;
+  mes.RoomViewModel privateRoomViewModel;
   StreamSubscription infoSubscription;
 
   @override
@@ -31,15 +31,15 @@ class _MessengerScreenState extends State<MessengerScreen> {
     if (authState is UserLoggedIn) {
       final firstUserId = authState.user.uid;
 
-      final roomResult = await (mes.PrivateRoomViewModel
-          .openPrivateRoom(firstUserId, 'secondUserId')
-            ..then((value) => print('Room opened successfuly'))
-            ..catchError((e) => print('Error : ' + e.toString())));
+      final roomResult = await (mes.RoomViewModel.openPrivateRoom(
+          firstUserId: firstUserId, secondUserId: 'secondUserId')
+        ..then((value) => print('Room opened successfuly'))
+        ..catchError((e) => print('Error : ' + e.toString())));
       if (roomResult is Success<mes.Room>) {
         final room = roomResult.data;
 
         setState(() {
-          privateRoomViewModel = mes.PrivateRoomViewModel(
+          privateRoomViewModel = mes.RoomViewModel(
               authViewModel: widget.authViewModel,
               room: room,
               roomOption:

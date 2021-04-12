@@ -1,6 +1,6 @@
 part of '../messenger.dart';
 
-class _MessengerServiceFirebase implements MessengerService {
+class _MessengerServiceFirebase implements _MessengerService {
   final kMessagesCollection = 'Messages';
   final kRoomsCollection = 'Rooms';
 

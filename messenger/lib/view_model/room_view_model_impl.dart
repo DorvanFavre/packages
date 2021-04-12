@@ -1,7 +1,7 @@
 part of '../messenger.dart';
 
-class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
-  _PrivateRoomViewModelImpl({
+class _RoomViewModelImpl implements RoomViewModel {
+  _RoomViewModelImpl({
     @required this.authViewModel,
     @required this.room,
     this.roomOption = const RoomOption(),
@@ -18,7 +18,7 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
 
     // Subscribe to the incoming messages
     _incomingMessageSubscription =
-        MessengerService()._incomingMessageStream(room).listen((message) {
+        _MessengerService()._incomingMessageStream(room).listen((message) {
       if (!_firstStream) {
         messagesNotifier.value.insert(0, message);
         messagesNotifier.notifyListeners();
@@ -46,7 +46,7 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
     if (!_isLoading && !_noMoreMessageToFetch) {
       _isLoading = true;
 
-      return MessengerService()
+      return _MessengerService()
           ._fetchMessages(
         room,
         _lastDoc.value == null
@@ -97,7 +97,7 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
           sentTime: now,
         );
 
-        return MessengerService()._saveMessage(room, message)
+        return _MessengerService()._saveMessage(room, message)
           ..then((result) {
             if (result is Success) {
               inputMessageController.clear();

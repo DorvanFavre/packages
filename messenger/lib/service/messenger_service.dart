@@ -1,12 +1,13 @@
 part of '../messenger.dart';
 
-abstract class MessengerService {
-  factory MessengerService() {
+abstract class _MessengerService {
+  factory _MessengerService() {
     return _MessengerServiceFirebase();
   }
 
   Future<Result<Room>> createPrivateRoom(
       String firstUserId, String secondUserId);
+
   Future<Result<Room>> openPrivateRoom(String firstUserId, String secondUserId);
 
   /// Fetch [limit] messages in database, [fromLastDoc] if non-null

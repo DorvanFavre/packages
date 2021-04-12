@@ -1,7 +1,7 @@
 part of '../messenger.dart';
 
 class InputMessage extends StatelessWidget {
-  final PrivateRoomViewModel viewModel;
+  final RoomViewModel viewModel;
 
   InputMessage({@required this.viewModel});
 
