@@ -114,7 +114,7 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
   bool _firstStream = true;
   bool _isLoading = false;
   bool _noMoreMessageToFetch = false;
-  QueryDocumentSnapshot _lastDoc;
+   _lastDoc;
   StreamSubscription _incomingMessageSubscription;
   BehaviorSubject<String> _infoBehavior;
 
