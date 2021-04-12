@@ -1,6 +1,6 @@
 part of 'tools.dart';
 
-class PrimitiveWrapper {
-  var value;
+class PrimitiveWrapper<T> {
+  T value;
   PrimitiveWrapper(this.value);
 }
