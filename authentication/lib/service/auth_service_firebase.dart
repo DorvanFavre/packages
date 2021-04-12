@@ -25,4 +25,9 @@ class _AuthServiceFirebase implements _AuthService {
         .then((value) => Success(data: value) as Result)
         .catchError((e) => Failure(message: e.toString()));
   }
+
+  @override
+  Future<void> logout() {
+    return FirebaseAuth.instance.signOut();
+  }
 }

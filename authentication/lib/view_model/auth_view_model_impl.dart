@@ -85,4 +85,9 @@ class _AuthViewModelImpl implements AuthViewModel {
     passwordRegisterController.dispose();
     repeatePasswordRegisterController.dispose();
   }
+
+  @override
+  Future<void> logout() {
+    return _AuthService().logout();
+  }
 }

@@ -15,6 +15,11 @@ abstract class _AuthService {
   /// Login user with email and password
   Future<Result> login(String email, String password);
 
+  /// Logout
+  /// 
+  /// Logout the user
+  Future<void> logout();
+
   /// Register
   ///
   /// Register new user with email ad password

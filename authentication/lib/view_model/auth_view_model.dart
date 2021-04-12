@@ -36,6 +36,11 @@ abstract class AuthViewModel {
   /// Login the user according with the email and password
   Future<Result> login();
 
+  /// Logout
+  ///
+  /// Logout the user
+  Future<void> logout();
+
   /// Register
   ///
   /// Register a new user with email and password

@@ -69,6 +69,7 @@ class _MessengerScreenState extends State<MessengerScreen> {
 
   @override
   void dispose() {
+    print('Messenger screen : Dispose');
     infoSubscription?.cancel();
     privateRoomViewModel?.dispose();
     super.dispose();
