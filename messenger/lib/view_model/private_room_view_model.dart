@@ -13,6 +13,11 @@ abstract class PrivateRoomViewModel {
         room: room, roomOption: roomOption, authViewModel: authViewModel);
   }
 
+  static Future<Result<Room>> openPrivateRoom(
+      {@required String firstUserId, @required String secondUserId}) {
+    return MessengerService().createPrivateRoom(firstUserId, secondUserId);
+  }
+
   /// Message notifier
   ///
   /// List of messages - get notified when list changes

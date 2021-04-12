@@ -24,8 +24,6 @@ class _MessengerScreenState extends State<MessengerScreen> {
     super.initState();
 
     initialize();
-
-    
   }
 
   void initialize() async {
@@ -33,7 +31,7 @@ class _MessengerScreenState extends State<MessengerScreen> {
     if (authState is UserLoggedIn) {
       final firstUserId = authState.user.uid;
 
-      final roomResult = await (mes.MessengerService()
+      final roomResult = await (mes.PrivateRoomViewModel
           .openPrivateRoom(firstUserId, 'secondUserId')
             ..then((value) => print('Room opened successfuly'))
             ..catchError((e) => print('Error : ' + e.toString())));
@@ -58,13 +56,24 @@ class _MessengerScreenState extends State<MessengerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: privateRoomViewModel != null
+        body: Column(
+      children: [
+        privateRoomViewModel != null
             ? mes.PrivateRoomView(
                 viewModel: privateRoomViewModel,
               )
             : Center(
                 child: Text('Loading...'),
-              ));
+              ),
+
+        // Logout button
+        TextButton(
+            onPressed: () {
+              widget.authViewModel.logout();
+            },
+            child: Text('Logout'))
+      ],
+    ));
   }
 
   @override
