@@ -1,7 +1,23 @@
 
-/// Messenger
+/// Messenger - see the [GitHub repo](https://github.com/DorvanFavre/packages/tree/main/messenger)
 /// 
 /// Implement a messenger API in your project
+///  * Private conversations
+/// 
+/// 
+/// MessengerService()
+/// 
+///  *
+/// 
+/// PrivateViewModel(AuthViewModel, Room, RoomOption)
+/// 
+///  * messageNotifier
+///  * inputMessageController
+///  * fetchMoreMessages()
+///  * sendMessage()
+///  * infoStream
+///  * dispose()
+/// 
 library messenger;
 
 import 'dart:async';

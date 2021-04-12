@@ -1,3 +1,9 @@
+
+
+/// Tools
+/// 
+///  * Result
+///  * Primitive wrapper
 library tools;
 
 part 'result.dart';

@@ -1,5 +1,5 @@
 
-/// Authentication - see the [GitHub repo](https://github.com/DorvanFavre/authentication)
+/// Authentication - see the [GitHub repo](https://github.com/DorvanFavre/packages/tree/main/authentication)
 /// 
 /// AuthViewModel()
 /// 

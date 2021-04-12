@@ -24,6 +24,8 @@ class _MessengerScreenState extends State<MessengerScreen> {
     super.initState();
 
     initialize();
+
+    
   }
 
   void initialize() async {

@@ -2,8 +2,8 @@ part of '../messenger.dart';
 
 class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
   _PrivateRoomViewModelImpl({
-    @required this.room,
     @required this.authViewModel,
+    @required this.room,
     this.roomOption = const RoomOption(),
   }) {
     inputMessageController = TextEditingController();
@@ -13,8 +13,10 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
 
     _infoBehavior.add('PrivateRoomViewModel : instancied');
 
+    // Load messages
     fetchMoreMessages();
 
+    // Subscribe to the incoming messages
     _incomingMessageSubscription =
         MessengerService()._incomingMessageStream(room).listen((message) {
       if (!_firstStream) {
@@ -28,6 +30,7 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
     });
   }
 
+  final AuthViewModel authViewModel;
   final Room room;
   final RoomOption roomOption;
 
@@ -46,7 +49,9 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
       return MessengerService()
           ._fetchMessages(
         room,
-        roomOption.loadOldMessageAmount,
+        _lastDoc.value == null
+            ? roomOption.firstLoadAmount
+            : roomOption.loadOldMessageAmount,
         _lastDoc,
       )
           .then((result) {
@@ -65,6 +70,9 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
         }
         _isLoading = false;
         return result;
+      }).catchError((e) {
+        _infoBehavior.add('PrivateRoomViewModel :   Error : ${e.toString()}');
+        return Failure<List<Message>>(message: e.toString());
       });
     } else
       _infoBehavior.add(
@@ -114,7 +122,7 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
   bool _firstStream = true;
   bool _isLoading = false;
   bool _noMoreMessageToFetch = false;
-   _lastDoc;
+  PrimitiveWrapper<QueryDocumentSnapshot> _lastDoc = PrimitiveWrapper(null);
   StreamSubscription _incomingMessageSubscription;
   BehaviorSubject<String> _infoBehavior;
 
@@ -127,7 +135,4 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
 
   @override
   Stream<String> infoStream;
-
-  @override
-  AuthViewModel authViewModel;
 }

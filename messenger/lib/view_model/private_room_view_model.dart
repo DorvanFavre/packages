@@ -5,8 +5,8 @@ part of '../messenger.dart';
 ///
 abstract class PrivateRoomViewModel {
   factory PrivateRoomViewModel({
-    @required Room room,
     @required AuthViewModel authViewModel,
+    @required Room room,
     RoomOption roomOption,
   }) {
     return _PrivateRoomViewModelImpl(
@@ -35,10 +35,8 @@ abstract class PrivateRoomViewModel {
   /// The text you are about to send
   TextEditingController inputMessageController;
 
-  /// Stream of messages to help debugging
+  /// Stream of infos to help debugging
   Stream<String> infoStream;
-
-  AuthViewModel authViewModel;
 
   void dispose();
 }

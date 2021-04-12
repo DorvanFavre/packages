@@ -11,8 +11,10 @@ abstract class MessengerService {
 
   /// Fetch [limit] messages in database, [fromLastDoc] if non-null
   Future<Result<List<Message>>> _fetchMessages(
-      Room room, int limit, QueryDocumentSnapshot lstDoc,
-      );
+    Room room,
+    int limit,
+    PrimitiveWrapper<QueryDocumentSnapshot> lastDoc,
+  );
 
   /// Stream of the last message
   Stream<Message> _incomingMessageStream(Room room);
