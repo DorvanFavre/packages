@@ -5,7 +5,7 @@ class _MessengerServiceFirebase implements _MessengerService {
   final kRoomsCollection = 'Rooms';
 
   @override
-  Future<Result<Room>> createPrivateRoom(
+  Future<Result<Room>> createRoom(
       String firstUserId, String secondUserId) {
     final roomId = Room.getChatRoomId(firstUserId, secondUserId);
     final docRef =
@@ -27,7 +27,7 @@ class _MessengerServiceFirebase implements _MessengerService {
   }
 
   @override
-  Future<Result<Room>> openPrivateRoom(
+  Future<Result<Room>> openRoom(
       String firstUserId, String secondUserId) {
     final roomId = Room.getChatRoomId(firstUserId, secondUserId);
     final docRef =
@@ -39,7 +39,7 @@ class _MessengerServiceFirebase implements _MessengerService {
         return Future.value(
             Success(data: Room.fromEntity(data)) as Result<Room>);
       } else {
-        return createPrivateRoom(firstUserId, secondUserId);
+        return createRoom(firstUserId, secondUserId);
       }
     }).catchError((e) => Failure<Room>(message: e.toString()));
   }
@@ -71,12 +71,6 @@ class _MessengerServiceFirebase implements _MessengerService {
         .snapshots()
         .where((snap) => snap.docChanges.last.type == DocumentChangeType.added)
         .map((snap) {
-      print(
-          'messenger service firebase : docChanges length : ${snap.docChanges.length}');
-      print(
-          'messenger service firebase : docChanges last : ${snap.docChanges.last.doc.id}');
-      print(
-          'messenger service firebase : docChanges last type : ${snap.docChanges.last.type}');
       final data = snap.docs.last.data()
         ..addAll({Message.docRefField: snap.docs.last.reference});
       return Message.fromEntity(data);

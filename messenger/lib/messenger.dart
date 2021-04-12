@@ -1,14 +1,13 @@
-
 /// Messenger - see the [GitHub repo](https://github.com/DorvanFavre/packages/tree/main/messenger)
-/// 
+///
 /// Implement a messenger API in your project
 ///  * Private conversations
-/// 
-/// 
+///
+///
 /// RoomViewModel
-///  * openPrivateRoom(String, String)
-/// 
-/// 
+///  * Future<Result<Room>> openPrivateRoom(String, String)
+///
+///
 /// RoomViewModel(AuthViewModel, Room, RoomOption)
 ///  * messageNotifier
 ///  * inputMessageController
@@ -16,10 +15,10 @@
 ///  * sendMessage()
 ///  * infoStream
 ///  * dispose()
-/// 
-/// 
-/// 
-/// 
+///
+///
+///
+///
 library messenger;
 
 import 'dart:async';
@@ -45,4 +44,3 @@ part 'view_model/room_view_model_impl.dart';
 
 part 'service/messenger_service.dart';
 part 'service/messenger_service_firebase.dart';
-

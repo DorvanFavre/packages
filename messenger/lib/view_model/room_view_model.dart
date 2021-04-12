@@ -16,9 +16,9 @@ abstract class RoomViewModel {
   /// Open a conversation room
   ///
   /// Create new one if doesn't exist
-  static Future<Result<Room>> openPrivateRoom(
+  static Future<Result<Room>> openRoom(
       {@required String firstUserId, @required String secondUserId}) {
-    return _MessengerService().createPrivateRoom(firstUserId, secondUserId);
+    return _MessengerService().openRoom(firstUserId, secondUserId);
   }
 
   /// Message notifier

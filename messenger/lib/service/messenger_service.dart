@@ -5,10 +5,10 @@ abstract class _MessengerService {
     return _MessengerServiceFirebase();
   }
 
-  Future<Result<Room>> createPrivateRoom(
+  Future<Result<Room>> createRoom(
       String firstUserId, String secondUserId);
 
-  Future<Result<Room>> openPrivateRoom(String firstUserId, String secondUserId);
+  Future<Result<Room>> openRoom(String firstUserId, String secondUserId);
 
   /// Fetch [limit] messages in database, [fromLastDoc] if non-null
   Future<Result<List<Message>>> _fetchMessages(

@@ -11,7 +11,7 @@ class _RoomViewModelImpl implements RoomViewModel {
     _infoBehavior = BehaviorSubject();
     infoStream = _infoBehavior.stream;
 
-    _infoBehavior.add('PrivateRoomViewModel : instancied');
+    _infoBehavior.add('RoomViewModel : instancied');
 
     // Load messages
     fetchMoreMessages();
@@ -23,7 +23,7 @@ class _RoomViewModelImpl implements RoomViewModel {
         messagesNotifier.value.insert(0, message);
         messagesNotifier.notifyListeners();
         _infoBehavior.add(
-            'PrivateRoomViewModel : message recieved : ${message?.content ?? '-'}');
+            'RoomViewModel : message recieved : ${message?.content ?? '-'}');
       } else {
         _firstStream = false;
       }
@@ -42,7 +42,7 @@ class _RoomViewModelImpl implements RoomViewModel {
 
   @override
   Future<Result> fetchMoreMessages() {
-    _infoBehavior.add('PrivateRoomViewModel : Fetch more messages');
+    _infoBehavior.add('RoomViewModel : Fetch more messages');
     if (!_isLoading && !_noMoreMessageToFetch) {
       _isLoading = true;
 
@@ -57,33 +57,32 @@ class _RoomViewModelImpl implements RoomViewModel {
           .then((result) {
         if (result is Success<List<Message>>) {
           final newMessages = result.data;
-          _infoBehavior.add(
-              'PrivateRoomViewModel :   ${newMessages.length} messages fetched');
-          newMessages.map((e) =>
-              _infoBehavior.add('PrivateRoomViewModel :      ${e.content}'));
+          _infoBehavior
+              .add('RoomViewModel :   ${newMessages.length} messages fetched');
+          newMessages.map(
+              (e) => _infoBehavior.add('RoomViewModel :      ${e.content}'));
           messagesNotifier.value = messagesNotifier.value + newMessages;
           if (newMessages.length < roomOption.loadOldMessageAmount) {
             _noMoreMessageToFetch = true;
-            _infoBehavior
-                .add('PrivateRoomViewModel :   No more message to fetch');
+            _infoBehavior.add('RoomViewModel :   No more message to fetch');
           }
         }
         _isLoading = false;
         return result;
       }).catchError((e) {
-        _infoBehavior.add('PrivateRoomViewModel :   Error : ${e.toString()}');
+        _infoBehavior.add('RoomViewModel :   Error : ${e.toString()}');
         return Failure<List<Message>>(message: e.toString());
       });
     } else
       _infoBehavior.add(
-          'PrivateRoomViewModel :   Already fetching messages or no more messages to fetch');
+          'RoomViewModel :   Already fetching messages or no more messages to fetch');
     return Future.value(Failure(
         message: 'Already fetching messages or no more messages to fetch'));
   }
 
   @override
   Future<Result> sendMessage() {
-    _infoBehavior.add('PrivateRoomViewModel : Send message');
+    _infoBehavior.add('RoomViewModel : Send message');
     return authViewModel.authStateStream.first.then((authState) {
       if (authState is UserLoggedIn) {
         final user = authState.user;
@@ -101,16 +100,16 @@ class _RoomViewModelImpl implements RoomViewModel {
           ..then((result) {
             if (result is Success) {
               inputMessageController.clear();
-              _infoBehavior.add(
-                  'PrivateRoomViewModel :   Success : Message saved to database');
+              _infoBehavior
+                  .add('RoomViewModel :   Success : Message saved to database');
             } else if (result is Failure) {
               _infoBehavior
-                  .add('PrivateRoomViewModel :   Failure : ${result.message}');
+                  .add('RoomViewModel :   Failure : ${result.message}');
             }
           });
       } else {
-        _infoBehavior.add(
-            'PrivateRoomViewModel :   Cannot send message if no user logged in');
+        _infoBehavior
+            .add('RoomViewModel :   Cannot send message if no user logged in');
         return Future.value(
             Failure(message: 'Cannot send message if no user logged in'));
       }

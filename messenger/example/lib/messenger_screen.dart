@@ -31,11 +31,11 @@ class _MessengerScreenState extends State<MessengerScreen> {
     if (authState is UserLoggedIn) {
       final firstUserId = authState.user.uid;
 
-      final roomResult = await (mes.RoomViewModel.openPrivateRoom(
+      final roomResult = await (mes.RoomViewModel.openRoom(
           firstUserId: firstUserId, secondUserId: 'secondUserId')
-        ..then((value) => print('Room opened successfuly'))
         ..catchError((e) => print('Error : ' + e.toString())));
       if (roomResult is Success<mes.Room>) {
+        print('Room opened successfuly');
         final room = roomResult.data;
 
         setState(() {
@@ -49,6 +49,8 @@ class _MessengerScreenState extends State<MessengerScreen> {
         infoSubscription = privateRoomViewModel.infoStream.listen((event) {
           print(event);
         });
+      } else if (roomResult is Failure<mes.Room>) {
+        print('error : ' + roomResult.message);
       }
     }
   }
