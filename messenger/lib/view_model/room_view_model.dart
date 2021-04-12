@@ -1,6 +1,6 @@
 part of '../messenger.dart';
 
-/// Private room view model
+/// Room view model
 ///
 ///
 abstract class RoomViewModel {

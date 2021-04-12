@@ -13,7 +13,7 @@ packages:
     description:
       path: authentication
       ref: HEAD
-      resolved-ref: "645dbcb0ade49d7b97efcfe7fa8f430a9ec4c39a"
+      resolved-ref: f3a8189c5c3a4d76069be3659ccdad2b000c9e5a
       url: "https://github.com/DorvanFavre/packages.git"
     source: git
     version: "0.0.9"
@@ -259,7 +259,7 @@ packages:
     description:
       path: tools
       ref: HEAD
-      resolved-ref: "645dbcb0ade49d7b97efcfe7fa8f430a9ec4c39a"
+      resolved-ref: f3a8189c5c3a4d76069be3659ccdad2b000c9e5a
       url: "https://github.com/DorvanFavre/packages.git"
     source: git
     version: "0.0.1"

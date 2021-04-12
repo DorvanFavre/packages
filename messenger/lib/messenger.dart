@@ -1,21 +1,37 @@
-/// Messenger - see the [GitHub repo](https://github.com/DorvanFavre/packages/tree/main/messenger)
+/// # Messenger 
+/// see the [GitHub repo](https://github.com/DorvanFavre/packages/tree/main/messenger)
 ///
+///
+/// ## Main features
+/// 
 /// Implement a messenger API in your project
 ///  * Private conversations
 ///
+/// ## Getting started
+/// 
+/// Open a room : _RoomViewModel.openRoom(firstUserId, secondUserId)_
 ///
-/// RoomViewModel
-///  * Future<Result<Room>> openPrivateRoom(String, String)
+/// Instenciate a roomViewModel : RoomViewModel(authViewModel, room)
+/// 
+/// Use the Room widget : PrivateRoomView(roomViewModel)
+/// 
+/// ## Classes
+/// 
+/// ### View
+///  * PrivateRoomView
+///  * InputMessageView
+///  * MessageView
 ///
+/// ### Model
 ///
-/// RoomViewModel(AuthViewModel, Room, RoomOption)
-///  * messageNotifier
-///  * inputMessageController
-///  * fetchMoreMessages()
-///  * sendMessage()
-///  * infoStream
-///  * dispose()
+///  * Room
+///  * RoomOption
+///  * Message
 ///
+/// ### ViewModel
+///  * RoomViewModel
+///
+/// 
 ///
 ///
 ///
