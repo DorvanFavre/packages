@@ -48,4 +48,6 @@ class Message {
       sentTimeField: sentTime,
     };
   }
+
+  bool operator ==(o) => o is Message && o.docRef == docRef;
 }

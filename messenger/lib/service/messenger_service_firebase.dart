@@ -45,24 +45,22 @@ class _MessengerServiceFirebase implements MessengerService {
   }
 
   @override
-  Future<Result<List<Message>>> _fetchMessages(Room room, int limit,
-      {QueryDocumentSnapshot fromLastDoc}) {
-    final query = fromLastDoc != null
+  Future<Result<List<Message>>> _fetchMessages(
+      Room room, int limit, QueryDocumentSnapshot lastDoc) {
+    final query = lastDoc != null
         ? room.docRef
             .collection(kMessagesCollection)
-            .startAfterDocument(fromLastDoc)
+            .startAfterDocument(lastDoc)
         : room.docRef.collection(kMessagesCollection);
 
-    return query
-        .limit(limit)
-        .get()
-        .then((snap) => Success(
-                data: snap.docs.map((doc) {
-              final data = doc.data()
-                ..addAll({Message.docRefField: doc.reference});
-              return Message.fromEntity(data);
-            }).toList()) as Result<List<Message>>)
-        .catchError((e) => Failure<List<Message>>(message: e.toString()));
+    return query.limit(limit).get().then((snap) {
+      lastDoc = snap.docs.first;
+      return Success(
+          data: snap.docs.map((doc) {
+        final data = doc.data()..addAll({Message.docRefField: doc.reference});
+        return Message.fromEntity(data);
+      }).toList()) as Result<List<Message>>;
+    }).catchError((e) => Failure<List<Message>>(message: e.toString()));
   }
 
   @override

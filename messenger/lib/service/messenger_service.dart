@@ -5,12 +5,14 @@ abstract class MessengerService {
     return _MessengerServiceFirebase();
   }
 
-  Future<Result<Room>> createPrivateRoom(String firstUserId, String secondUserId);
+  Future<Result<Room>> createPrivateRoom(
+      String firstUserId, String secondUserId);
   Future<Result<Room>> openPrivateRoom(String firstUserId, String secondUserId);
 
   /// Fetch [limit] messages in database, [fromLastDoc] if non-null
-  Future<Result<List<Message>>> _fetchMessages(Room room, int limit,
-      {QueryDocumentSnapshot fromLastDoc});
+  Future<Result<List<Message>>> _fetchMessages(
+      Room room, int limit, QueryDocumentSnapshot lstDoc,
+      );
 
   /// Stream of the last message
   Stream<Message> _incomingMessageStream(Room room);

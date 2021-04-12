@@ -13,14 +13,18 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
 
     _infoBehavior.add('PrivateRoomViewModel : instancied');
 
-    //fetchMoreMessages();
+    fetchMoreMessages();
 
     _incomingMessageSubscription =
         MessengerService()._incomingMessageStream(room).listen((message) {
-      messagesNotifier.value.insert(0, message);
-      messagesNotifier.notifyListeners();
-      _infoBehavior.add(
-          'PrivateRoomViewModel : message recieved : ${message?.content ?? '-'}');
+      if (!_firstStream) {
+        messagesNotifier.value.insert(0, message);
+        messagesNotifier.notifyListeners();
+        _infoBehavior.add(
+            'PrivateRoomViewModel : message recieved : ${message?.content ?? '-'}');
+      } else {
+        _firstStream = false;
+      }
     });
   }
 
@@ -38,51 +42,30 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
     _infoBehavior.add('PrivateRoomViewModel : Fetch more messages');
     if (!_isLoading && !_noMoreMessageToFetch) {
       _isLoading = true;
-      if (_lastDoc == null) {
-        return MessengerService()
-            ._fetchMessages(room, roomOption.firstLoadAmount)
-            .then((result) {
-          if (result is Success<List<Message>>) {
-            final newMessages = result.data;
-            _infoBehavior.add(
-                'PrivateRoomViewModel :   ${newMessages.length} messages fetched');
-            newMessages.map((e) =>
-                _infoBehavior.add('PrivateRoomViewModel :      ${e.content}'));
-            messagesNotifier.value = messagesNotifier.value + newMessages;
-            if (newMessages.length < roomOption.firstLoadAmount) {
-              _noMoreMessageToFetch = true;
-              _infoBehavior
-                  .add('PrivateRoomViewModel :   No more message to fetch');
-            }
-            _isLoading = false;
-            return Success();
-          } else if (result is Failure<List<Message>>) {
-            _isLoading = false;
-            return Failure(message: result.message);
+
+      return MessengerService()
+          ._fetchMessages(
+        room,
+        roomOption.loadOldMessageAmount,
+        _lastDoc,
+      )
+          .then((result) {
+        if (result is Success<List<Message>>) {
+          final newMessages = result.data;
+          _infoBehavior.add(
+              'PrivateRoomViewModel :   ${newMessages.length} messages fetched');
+          newMessages.map((e) =>
+              _infoBehavior.add('PrivateRoomViewModel :      ${e.content}'));
+          messagesNotifier.value = messagesNotifier.value + newMessages;
+          if (newMessages.length < roomOption.loadOldMessageAmount) {
+            _noMoreMessageToFetch = true;
+            _infoBehavior
+                .add('PrivateRoomViewModel :   No more message to fetch');
           }
-        }).catchError((e) => Failure(message: e.toString()));
-      } else {
-        return MessengerService()
-            ._fetchMessages(room, roomOption.loadOldMessageAmount,
-                fromLastDoc: _lastDoc)
-            .then((result) {
-          if (result is Success<List<Message>>) {
-            final newMessages = result.data;
-            _infoBehavior.add(
-                'PrivateRoomViewModel :   ${newMessages.length} messages fetched');
-            newMessages.map((e) =>
-                _infoBehavior.add('PrivateRoomViewModel :      ${e.content}'));
-            messagesNotifier.value = messagesNotifier.value + newMessages;
-            if (newMessages.length < roomOption.loadOldMessageAmount) {
-              _noMoreMessageToFetch = true;
-              _infoBehavior
-                  .add('PrivateRoomViewModel :   No more message to fetch');
-            }
-          }
-          _isLoading = false;
-          return result;
-        });
-      }
+        }
+        _isLoading = false;
+        return result;
+      });
     } else
       _infoBehavior.add(
           'PrivateRoomViewModel :   Already fetching messages or no more messages to fetch');
@@ -128,6 +111,7 @@ class _PrivateRoomViewModelImpl implements PrivateRoomViewModel {
 
   // Private
 
+  bool _firstStream = true;
   bool _isLoading = false;
   bool _noMoreMessageToFetch = false;
   QueryDocumentSnapshot _lastDoc;
