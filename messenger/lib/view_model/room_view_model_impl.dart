@@ -85,14 +85,14 @@ class _RoomViewModelImpl implements RoomViewModel {
     _infoBehavior.add('RoomViewModel : Send message');
     return authViewModel.authStateStream.first.then((authState) {
       if (authState is UserLoggedIn) {
-        final user = authState.user;
+        final userId = authState.userId;
 
         final now = Timestamp.now();
 
         Message message = Message(
           content: inputMessageController.text,
           contentType: 'text', // Todo change
-          senderId: user.uid,
+          senderId: userId,
           sentTime: now,
         );
 

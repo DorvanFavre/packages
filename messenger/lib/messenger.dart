@@ -52,7 +52,8 @@ part 'model/message.dart';
 part 'model/room_option.dart';
 part 'model/room.dart';
 
-part 'view/private_room_view.dart';
+part 'view/room_material.dart';
+part 'view/private_room.dart';
 part 'view/message_container_view.dart';
 part 'view/input_message_view.dart';
 

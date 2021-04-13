@@ -29,7 +29,7 @@ class _MessengerScreenState extends State<MessengerScreen> {
   void initialize() async {
     final authState = await widget.authViewModel.authStateStream.first;
     if (authState is UserLoggedIn) {
-      final firstUserId = authState.user.uid;
+      final firstUserId = authState.userId;
 
       final roomResult = await (mes.RoomViewModel.openRoom(
           firstUserId: firstUserId, secondUserId: 'secondUserId')
@@ -61,7 +61,7 @@ class _MessengerScreenState extends State<MessengerScreen> {
         body: Column(
       children: [
         privateRoomViewModel != null
-            ? mes.PrivateRoomView(
+            ? mes.RoomMaterial(
                 viewModel: privateRoomViewModel,
               )
             : Center(
