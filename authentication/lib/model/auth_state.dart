@@ -5,7 +5,7 @@ abstract class AuthState {}
 class NoUserLoggedIn extends AuthState {}
 
 class UserLoggedIn extends AuthState {
-  UserLoggedIn({@required this.user});
+  UserLoggedIn({@required this.userId});
 
-  final User user;
+  final String userId;
 }

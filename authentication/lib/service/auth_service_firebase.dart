@@ -6,7 +6,7 @@ class _AuthServiceFirebase implements _AuthService {
     return FirebaseAuth.instance
         .authStateChanges()
         .map((event) =>
-            event == null ? NoUserLoggedIn() : UserLoggedIn(user: event))
+            event == null ? NoUserLoggedIn() : UserLoggedIn(userId: event.uid))
         .shareValue();
   }
 

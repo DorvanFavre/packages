@@ -40,10 +40,10 @@ class _MessengerScreenState extends State<MessengerScreen> {
 
         setState(() {
           privateRoomViewModel = mes.RoomViewModel(
-              authViewModel: widget.authViewModel,
-              room: room,
-              roomOption:
-                  mes.RoomOption(firstLoadAmount: 10, loadOldMessageAmount: 5));
+            authViewModel: widget.authViewModel,
+            room: room,
+            // roomOption:   mes.RoomOption(firstLoadAmount: 10, loadOldMessageAmount: 5)
+          );
         });
 
         infoSubscription = privateRoomViewModel.infoStream.listen((event) {

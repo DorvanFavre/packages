@@ -10,8 +10,13 @@ abstract class RoomViewModel {
     RoomOption roomOption,
   }) {
     return _RoomViewModelImpl(
-        room: room, roomOption: roomOption, authViewModel: authViewModel);
+        room: room,
+        roomOption: roomOption ?? const RoomOption(),
+        authViewModel: authViewModel);
   }
+
+  /// Auth view model
+  final AuthViewModel authViewModel;
 
   /// Open a conversation room
   ///
