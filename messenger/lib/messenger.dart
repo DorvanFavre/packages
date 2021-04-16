@@ -1,22 +1,26 @@
-/// # Messenger 
+/// # Messenger
 /// see the [GitHub repo](https://github.com/DorvanFavre/packages/tree/main/messenger)
 ///
 ///
 /// ## Main features
-/// 
+///
 /// Implement a messenger API in your project
 ///  * Private conversations
 ///
-/// ## Getting started
-/// 
+/// ## External Setup
+///  * Firebase Firestore
+///
+///
+/// ## Example
+///
 /// Open a room : _RoomViewModel.openRoom(firstUserId, secondUserId)_
 ///
 /// Instenciate a roomViewModel : RoomViewModel(authViewModel, room)
-/// 
+///
 /// Use the Room widget : PrivateRoomView(roomViewModel)
-/// 
+///
 /// ## Classes
-/// 
+///
 /// ### View
 ///  * PrivateRoomView
 ///  * InputMessageView
@@ -31,7 +35,7 @@
 /// ### ViewModel
 ///  * RoomViewModel
 ///
-/// 
+///
 ///
 ///
 ///

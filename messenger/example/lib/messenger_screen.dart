@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:authentication/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:messenger/messenger.dart' as mes;
-import 'package:messenger/messenger.dart';
 import 'package:tools/tools.dart';
 
 class MessengerScreen extends StatefulWidget {
@@ -63,7 +62,9 @@ class _MessengerScreenState extends State<MessengerScreen> {
         privateRoomViewModel != null
             ? mes.RoomMaterial(
                 viewModel: privateRoomViewModel,
-              )
+                child: mes
+                    .PrivateRoom() // Container(height: 100, color: Colors.blue)
+                )
             : Center(
                 child: Text('Loading...'),
               ),

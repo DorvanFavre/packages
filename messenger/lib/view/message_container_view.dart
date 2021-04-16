@@ -7,11 +7,15 @@ class MessageContainerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isMyMessage = context.read<String>() == message.senderId;
+
     return Container(
-      padding: EdgeInsets.fromLTRB(10, 0, 130, 10),
-      alignment: Alignment.topLeft,
+      padding: isMyMessage
+          ? EdgeInsets.fromLTRB(130, 0, 10, 10)
+          : EdgeInsets.fromLTRB(10, 0, 130, 10),
+      alignment: isMyMessage ? Alignment.topRight : Alignment.topLeft,
       child: Container(
-        padding: EdgeInsets.only(right: 10),
+        padding: EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
@@ -21,13 +25,17 @@ class MessageContainerView extends StatelessWidget {
             ],
             color: Colors.grey,
             borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10),
-                topRight: Radius.circular(10))),
+              bottomLeft: Radius.circular(10),
+              bottomRight:
+                  isMyMessage ? Radius.circular(0) : Radius.circular(10),
+              topRight: Radius.circular(10),
+              topLeft: isMyMessage ? Radius.circular(10) : Radius.circular(0),
+            )),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment:
+                isMyMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start,
             children: [
               // Username
 
