@@ -17,6 +17,10 @@ class Success<T> extends Result<T> {
 
   Success({required this.data, String message = 'no message'})
       : super(message: message);
+
+  T call() {
+    return data;
+  }
 }
 
 class Failure<T> extends Result<T> {

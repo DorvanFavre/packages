@@ -36,6 +36,18 @@ void main() {
       }
     });
 
+    test('success call function', () {
+      final result = returnSuccess();
+
+      expect(result is Success, isTrue);
+      expect(result is Success<int>, isTrue);
+
+      if (result is Success<int>) {
+        expect(result(), 10);
+        expect(result.message, message);
+      }
+    });
+
     test('success from factory', () {
       final result = returnSuccessFromFactory();
 
