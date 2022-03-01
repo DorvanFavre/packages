@@ -1,4 +1,4 @@
-import 'package:result/result.dart';
+import 'package:ml/src/tool/result.dart';
 import 'package:test/test.dart';
 
 void main() {
